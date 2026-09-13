@@ -6,7 +6,7 @@ init()  # Inicializando o colorama
 
 def Menu(): #Função Menu
     while True: #Definindo um loop pro menu
-        print(Fore.BLUE + "\nSeja bem-vindo ao sistema de cadastro de produtos!")
+        print(Fore.CYAN + "\nSeja bem-vindo ao sistema de cadastro de produtos!")
         print(Fore.MAGENTA + "\nSISTEMA DE CADASTRO DE PRODUTOS")
         print(Fore.GREEN + "1 - Cadastrar produto")
         print(Fore.BLUE + "2 - Listar produtos")
@@ -28,13 +28,13 @@ def Menu(): #Função Menu
 
 def cadastrar_produto(): #Função cadastrar produto
     print(Fore.CYAN + "CADASTRO DE PRODUTO")
-    print(Fore.MAGENTA + "Informe os dados do produto.")
+    print(Fore.MAGENTA + "Informe os dados do produto." + Style.RESET_ALL)
 
     while True:
         nome = input("Digite o nome do produto: ").strip() #Solicita o nome do produto e remove espaços no inicio e no fim
 
         if nome == "": #Não deixa ser um nome vazio
-            print(Fore.RED + "Nome inválido. Preencha corretamente.")
+            print(Fore.RED + "Nome inválido. Preencha corretamente." + Style.RESET_ALL)
             continue #Continua o loop caso seja inválido
 
         invalido = False #Variável para verificar se o nome é inválido, ela começa como falsa até que se prove o contrário
@@ -45,7 +45,7 @@ def cadastrar_produto(): #Função cadastrar produto
                 break #Sai do loop caso encontre um caractere inválido
 
         if invalido:
-            print(Fore.RED + "Nome inválido. Preencha corretamente.")
+            print(Fore.RED + "Nome inválido. Preencha corretamente." + Style.RESET_ALL)
             continue #Se for inválido, continua o loop até ser válido
 
         break #Sai do loop caso o nome seja válido
@@ -57,24 +57,24 @@ def cadastrar_produto(): #Função cadastrar produto
             preco = float(preco) #Converte o preço pra float
 
             if preco < 0: #Não deixa o usuário digitar preços negativos
-                print(Fore.RED + "Preço inválido​. Preencha corretamente.") #Se for inválido, continua o loop até ser válido
+                print(Fore.RED + "Preço inválido​. Preencha corretamente." + Style.RESET_ALL) #Se for inválido, continua o loop até ser válido
                 continue #Continua o loop caso seja inválido
 
             break #Sai do loop caso o preço seja válido
 
         except ValueError: #Se o usuário digitar letras ou carcteres especiais, o programa vai mostrar mensagem de erro e continuar o loop
-            print(Fore.RED + "Preço inválido​. Preencha corretamente.")
+            print(Fore.RED + "Preço inválido​. Preencha corretamente." + Style.RESET_ALL)
 
     
     while True:
         try:
             quantidade = int(input("Digite a quantidade desejada: "))
             if quantidade < 0:
-                print(Fore.RED + "Quantidade inválida. Preencha corretamente.")
+                print(Fore.RED + "Quantidade inválida. Preencha corretamente." + Style.RESET_ALL)
                 continue
             break
         except ValueError:
-            print(Fore.RED + "Quantidade inválida​. Preencha corretamente.")
+            print(Fore.RED + "Quantidade inválida​. Preencha corretamente." + Style.RESET_ALL)
 
     print(Fore.GREEN + "Produto cadastrado com sucesso!​") #Sucesso ao cadastrar produto
 
@@ -86,14 +86,14 @@ def listar_produtos(): #Função listar produtos
     print(Fore.MAGENTA + "LISTA DE PRODUTOS") 
 
     if not os.path.exists("produtos.txt"): #Verifica se o arquivo txt existe, caso não exista, ele mostra erro
-        print(Fore.RED + "Nenhum aluno cadastrado.")
+        print(Fore.RED + "Nenhum aluno cadastrado." + Style.RESET_ALL)
         return
 
     with open("produtos.txt", "r", encoding="utf-8") as arquivo: #Abre o arquivo produtos.txt no modo leitura - read
         produtos = arquivo.readlines() #Lê todas as linhas do arquivo e armazena na variável produtos
 
     if not produtos: #Se não houver alunos cadastrados, ele mostra erro
-        print(Fore.RED + "Nenhum aluno cadastrado.")
+        print(Fore.RED + "Nenhum aluno cadastrado." + Style.RESET_ALL)
         return
 
     for produto in produtos: #Para cada produto em produtos
@@ -101,12 +101,6 @@ def listar_produtos(): #Função listar produtos
         preco = float(preco) #Converte o preço para número decimal
         quantidade = int(quantidade) #Converte a quantidade para número inteiro
 
-        if quantidade > 0: #Se a quantidade for maior que 0, está disponível
-            situacao = "Disponível ✅​"
-            cor = Fore.GREEN #Deixa a mensagem verde
-        else:
-            situacao = "Indisponível❌​" #Se for menor que 6, tá reprovado
-            cor = Fore.RED #Deixa a mensagem vermelha
 
         print(f"\n{Fore.CYAN}Produto: {nome} --------~ {Style.RESET_ALL}{Fore.GREEN}Preço: {preco:.2f} --------~ {Style.RESET_ALL}{Fore.YELLOW}Quantidade: {quantidade}{Style.RESET_ALL}") #Mostra os dados do produto
 
@@ -114,34 +108,34 @@ def alterar_produto(): #Função alterar produto
     print(Fore.CYAN + "ALTERAR PRODUTO") 
 
     if not os.path.exists("produtos.txt"): #Se não houver o arquivo, mostra mensagem de erro
-        print(Fore.RED + "Nenhum produto cadastrado.")
+        print(Fore.RED + "Nenhum produto cadastrado." + Style.RESET_ALL)
         return
 
     with open("produtos.txt", "r", encoding="utf-8") as arquivo: #Abre o arquivo pra leitura
         produtos = arquivo.readlines() #Lê os produtos cadastrados e armazena em uma lista
 
     if not produtos: #Se não achar produtos, mostra nenhum produto cadastrado
-        print(Fore.RED + "Nenhum produto cadastrado.")
+        print(Fore.RED + "Nenhum produto cadastrado." + Style.RESET_ALL)
         return
 
-    print(Fore.YELLOW + "\nProdutos cadastrados:") #Mostra os produtos cadastrados
+    print(Fore.YELLOW + "\nProdutos cadastrados:" + Style.RESET_ALL) #Mostra os produtos cadastrados
 
     for produto in produtos:
         nome, preco, quantidade = produto.strip().split("|") #Separa o nome, preço e quantidade do produto
         preco = float(preco) #Converte o preço para número decimal antes de formatar
-        print(Fore.GREEN + f"Produto: {nome} -------- Preço: {preco:.2f} -------- Quantidade: {quantidade}") 
+        print(f"\n{Fore.CYAN}Produto: {nome} --------~ {Style.RESET_ALL}{Fore.GREEN}Preço: {preco:.2f} --------~ {Style.RESET_ALL}{Fore.YELLOW}Quantidade: {quantidade}{Style.RESET_ALL}") #Mostra os dados do produto 
 
     while True:
         alteracao = input("\nDigite o nome do produto que deseja alterar: ").strip() #Pede o nome pro usuário de quem deseja alterar
 
         if alteracao == "": #Se for vázio, dá erro
-            print(Fore.RED + "Nome inválido.​")
+            print(Fore.RED + "Nome inválido.​" + Style.RESET_ALL)
             continue
 
         encontrado = False #Variável para encontrar, começa como falsa até que se mostre verdadeira
 
         for produto in produtos:
-            nome, preco, quantidade = produto.strip().split("---")
+            nome, preco, quantidade = produto.strip().split("|")
 
             if nome.lower() == alteracao.lower(): #Compara o nome ignorando letras maiúsculas e minúsculas
                 encontrado = True 
@@ -150,13 +144,13 @@ def alterar_produto(): #Função alterar produto
         if encontrado: #Se encontrar, quebra o loop
             break
 
-        print(Fore.RED + "Produto não encontrado.")
+        print(Fore.RED + "Produto não encontrado." + Style.RESET_ALL)
 
     while True:
         nome = input("Digite o novo nome: ").strip() #Pede um novo nome 
 
         if nome == "": #Não deixa ser vázio
-            print(Fore.RED + "Nome inválido.​") 
+            print(Fore.RED + "Nome inválido.​" + Style.RESET_ALL)
             continue #Continua o loop
 
         invalido = False #Variável que verifica se o novo nome possui caracteres inválidos
@@ -167,7 +161,7 @@ def alterar_produto(): #Função alterar produto
                 break
 
         if invalido:
-            print(Fore.RED + "Nome inválido.​")
+            print(Fore.RED + "Nome inválido.​" + Style.RESET_ALL)
             continue
 
         break
@@ -178,68 +172,68 @@ def alterar_produto(): #Função alterar produto
             novo_preco = float(novo_preco.replace(",", ".")) #Converte o novo preço para float e deixa usarem vírgula
 
             if novo_preco < 0: #Não deixa o usuário digitar preços negativos
-                print(Fore.RED + "Preço inválido.​")
+                print(Fore.RED + "Preço inválido.​" + Style.RESET_ALL)
                 continue
 
             break
 
         except ValueError: #Impede que o programa pare caso o usuário digite um valor inválido
-            print(Fore.RED + "Preço inválido.​")
+            print(Fore.RED + "Preço inválido.​" + Style.RESET_ALL)
     while True:
         try:
             nova_quantidade = int(input("Digite a nova quantidade: ")) #Solicita a nova quantidade
             if nova_quantidade < 0: #Não deixa o usuário digitar quantidade negativa
-                print(Fore.RED + "Quantidade inválida.​")
+                print(Fore.RED + "Quantidade inválida.​" + Style.RESET_ALL)
                 continue
             break
         except ValueError:
-            print(Fore.RED + "Quantidade inválida.​")
+            print(Fore.RED + "Quantidade inválida.​" + Style.RESET_ALL)
 
     for i in range(len(produtos)): #Percorre a lista de produtos para encontrar o produto que será alterado
-        nome_antigo, preco, quantidade = produtos[i].strip().split("---")
+        nome_antigo, preco, quantidade = produtos[i].strip().split("|")
 
         if nome_antigo.lower() == alteracao.lower(): #Verifica se encontrou o produto escolhido
-            produtos[i] = f"{nome}---{novo_preco}---{nova_quantidade}\n" #Substitui os dados antigos pelos novos, mantendo o separador "---"
+            produtos[i] = f"{nome}|{novo_preco}|{nova_quantidade}\n" #Substitui os dados antigos pelos novos, mantendo o separador "|"
             break
 
     with open("produtos.txt", "w", encoding="utf-8") as arquivo: #Abre o arquivo para reescrever os dados atualizados
         for produto in produtos:
             arquivo.write(produto)
 
-    print(Fore.GREEN + "Produto alterado com sucesso! ✅​")
+    print(Fore.GREEN + "Produto alterado com sucesso! ✅​" + Style.RESET_ALL)
 
 
 def excluir_produto(): #Função para excluir produto
     print(Fore.CYAN + "EXCLUIR PRODUTO")
 
     if not os.path.exists("produtos.txt"): #Verifica se o arquivo existe
-        print(Fore.RED + "Nenhum produto cadastrado.")
+        print(Fore.RED + "Nenhum produto cadastrado." + Style.RESET_ALL)
         return
 
     with open("produtos.txt", "r", encoding="utf-8") as arquivo: #Abre o arquivo para leitura
         produtos = arquivo.readlines() #Lê os produtos cadastrados
 
     if not produtos: #Verifica se existem produtos cadastrados
-        print(Fore.RED + "Nenhum produto cadastrado.")
+        print(Fore.RED + "Nenhum produto cadastrado." + Style.RESET_ALL)
         return
 
     print(Fore.YELLOW + "\nProdutos cadastrados:")
 
     for produto in produtos:
-        nome, preco, quantidade = produto.strip().split("---") #Separa o nome, preço e quantidade do produto
-        print(Fore.GREEN + f"Produto: {nome} | Preço: {preco} | Quantidade: {quantidade}")
-
+        nome, preco, quantidade = produto.strip().split("|") #Separa o nome, preço e quantidade do produto
+        preco = float(preco)
+        print(f"\n{Fore.CYAN}Produto: {nome} --------~ {Style.RESET_ALL}{Fore.GREEN}Preço: {preco:.2f} --------~ {Style.RESET_ALL}{Fore.YELLOW}Quantidade: {quantidade}{Style.RESET_ALL}") #Mostra os dados do produto
     excluir = input(Fore.MAGENTA +"\nDigite o nome do produto que deseja excluir: ").strip() #Pede o nome do produto que será excluído
 
     if excluir == "": #Não deixa o nome ser vazio
-        print(Fore.RED + "Nome inválido.❌​")
+        print(Fore.RED + "Nome inválido.❌​" + Style.RESET_ALL)
         return
 
     nova_lista = [] #Cria uma lista para armazenar os produtos que não serão excluídos
     encontrado = False #Verifica se o produto foi encontrado
 
     for produto in produtos:
-        nome, preco, quantidade = produto.strip().split("---")
+        nome, preco, quantidade = produto.strip().split("|")
 
         if nome.lower() == excluir.lower(): #Verifica se o nome corresponde ao produto escolhido
             encontrado = True
@@ -251,10 +245,10 @@ def excluir_produto(): #Função para excluir produto
             for produto in nova_lista:
                 arquivo.write(produto)
 
-        print(Fore.GREEN + "Produto excluído com sucesso!✅​")
+        print(Fore.GREEN + "Produto excluído com sucesso!✅​" + Style.RESET_ALL)
 
     else:
-        print(Fore.RED + "Produto não encontrado.")
+        print(Fore.RED + "Produto não encontrado." + Style.RESET_ALL)
 
 
 def sair(): #Função para encerrar o sistema
