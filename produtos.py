@@ -86,14 +86,14 @@ def listar_produtos(): #Função listar produtos
     print(Fore.MAGENTA + "LISTA DE PRODUTOS") 
 
     if not os.path.exists("produtos.txt"): #Verifica se o arquivo txt existe, caso não exista, ele mostra erro
-        print(Fore.RED + "Nenhum aluno cadastrado." + Style.RESET_ALL)
+        print(Fore.RED + "Nenhum produto cadastrado." + Style.RESET_ALL)
         return
 
     with open("produtos.txt", "r", encoding="utf-8") as arquivo: #Abre o arquivo produtos.txt no modo leitura - read
         produtos = arquivo.readlines() #Lê todas as linhas do arquivo e armazena na variável produtos
 
-    if not produtos: #Se não houver alunos cadastrados, ele mostra erro
-        print(Fore.RED + "Nenhum aluno cadastrado." + Style.RESET_ALL)
+    if not produtos: #Se não houver produtos cadastrados, ele mostra erro
+        print(Fore.RED + "Nenhum produto cadastrado." + Style.RESET_ALL)
         return
 
     for produto in produtos: #Para cada produto em produtos
